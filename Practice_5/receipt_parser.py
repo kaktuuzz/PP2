@@ -46,7 +46,7 @@ payment_match = re.search(payment_pattern, text)
 payment_method = payment_match.group(1) if payment_match else None
 
 
-#6. Structured output (JSON)
+#6. Output
 
 result = {
     "product_names": product_names,
