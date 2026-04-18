@@ -46,7 +46,6 @@ class MickeyClock:
         
         now = datetime.datetime.now()
         
-        # Calculate angles
         min_angle = -(now.minute * 6)
         sec_angle = -(now.second * 6)
 

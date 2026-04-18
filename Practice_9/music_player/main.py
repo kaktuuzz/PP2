@@ -1,17 +1,3 @@
-"""
-Music Player with Keyboard Controller
-======================================
-Interactive music player built with Pygame.
-
-Controls:
-  P  — Play current track
-  S  — Stop
-  SPACE — Pause / Resume
-  N  — Next track
-  B  — Previous (Back) track
-  Q  — Quit
-"""
-
 import pygame
 import sys
 from player import MusicPlayer
