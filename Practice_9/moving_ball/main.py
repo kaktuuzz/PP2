@@ -5,7 +5,7 @@ pygame.init()
 
 width, height = 600, 400
 screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Moving Ball")
+pygame.display.set_caption("bal")
 
 ball = Ball(width // 2, height // 2)
 

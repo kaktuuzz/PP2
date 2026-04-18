@@ -12,11 +12,10 @@ def main():
     clock_app = MickeyClock(WIDTH, HEIGHT)
     timer = pygame.time.Clock()
 
-    running = True
-    while running:
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                exit()
 
         clock_app.render(screen)
         pygame.display.flip()

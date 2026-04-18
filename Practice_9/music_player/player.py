@@ -104,7 +104,7 @@ class MusicPlayer:
     def get_status(self):
         
         if self.is_stopped:
-            return "⏹ Stopped"
+            return "Stopped"
         if self.is_playing:
-            return "▶ Playing"
-        return "⏸ Paused"
+            return "Playing"
+        return "Paused"
