@@ -1,6 +1,6 @@
 import pygame
 import sys
-from clock import MickeyClock
+from clock import clock
 
 def main():
     pygame.init()
@@ -9,7 +9,7 @@ def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Mickey Mouse Clock")
     
-    clock_app = MickeyClock(WIDTH, HEIGHT)
+    clock_app = clock(WIDTH, HEIGHT)
     timer = pygame.time.Clock()
 
     while True:
@@ -17,7 +17,7 @@ def main():
             if event.type == pygame.QUIT:
                 exit()
 
-        clock_app.render(screen)
+        clock_app.draw(screen)
         pygame.display.flip()
         timer.tick(60)
 

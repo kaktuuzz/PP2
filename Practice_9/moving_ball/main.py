@@ -3,7 +3,7 @@ from ball import Ball
 
 pygame.init()
 
-width, height = 600, 400
+width, height = 615, 415
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("bal")
 
