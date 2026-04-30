@@ -3,7 +3,7 @@ from pygame.locals import *
 
 pygame.init()
 
-# ---------- SETTINGS ----------
+# SETTINGS
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 600
 FPS = 60
@@ -26,7 +26,7 @@ power_timer = 0
 state = "name_input"
 player_name = ""
 
-# ---------- DISPLAY ----------
+# DISPLAY
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Racer")
 clock = pygame.time.Clock()
@@ -36,7 +36,7 @@ font_small = pygame.font.SysFont("Verdana", 20)
 
 background = pygame.image.load("AnimatedStreet.png")
 
-# ---------- PLAYER ----------
+# PLAYER
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -53,7 +53,7 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.clamp_ip(screen.get_rect())
 
-# ---------- ENEMY ----------
+#  ENEMY
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -68,7 +68,7 @@ class Enemy(pygame.sprite.Sprite):
             SCORE += 1
             self.kill()
 
-# ---------- OIL ----------
+# OIL 
 class Oil(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -82,7 +82,7 @@ class Oil(pygame.sprite.Sprite):
         if self.rect.top > SCREEN_HEIGHT:
             self.kill()
 
-# ---------- POWER UPS ----------
+# POWER UPS 
 class Nitro(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -109,7 +109,7 @@ class Shield(pygame.sprite.Sprite):
         if self.rect.top > SCREEN_HEIGHT:
             self.kill()
 
-# ---------- LEADERBOARD ----------
+# LEADERBOARD
 def save_score(name, score):
     try:
         with open("leaderboard.json", "r") as f:
@@ -130,7 +130,7 @@ def load_scores():
     except:
         return []
 
-# ---------- RESET ----------
+# RESET
 def reset_game():
     global player, enemies, oils, nitros, shields, all_sprites
     global SCORE, SPEED, distance, active_power
@@ -149,7 +149,7 @@ def reset_game():
 
     all_sprites = pygame.sprite.Group(player)
 
-# ---------- MAIN LOOP ----------
+# MAIN LOOP
 reset_game()
 
 while True:
@@ -179,19 +179,19 @@ while True:
 
     screen.blit(background, (0, 0))
 
-    # ---------- NAME INPUT ----------
+    # NAME INPUT
     if state == "name_input":
         t1 = font.render("Enter Name:", True, (0,0,0))
         t2 = font.render(player_name, True, (0,0,255))
         screen.blit(t1, (80,200))
         screen.blit(t2, (80,260))
 
-    # ---------- MENU ----------
+    #  MENU
     elif state == "menu":
         t = font.render("Press ENTER", True, (0,0,0))
         screen.blit(t, (80,250))
 
-    # ---------- GAME ----------
+    #  GAME
     elif state == "game":
 
         # spawn enemies
@@ -258,7 +258,7 @@ while True:
         screen.blit(font_small.render(f"Dist: {int(distance)}", True, (0,0,0)), (10,30))
         screen.blit(font_small.render(f"Power: {active_power}", True, (0,0,0)), (10,50))
 
-    # ---------- GAME OVER ----------
+    #  GAME OVER 
     elif state == "game_over":
         t = font.render("Game Over", True, (255,0,0))
         screen.blit(t, (80,200))

@@ -21,7 +21,6 @@ conn.autocommit = False          # explicit commits throughout
 
 
 def cur():
-    """Return a dict-row cursor."""
     return conn.cursor(cursor_factory=RealDictCursor)
 
 
@@ -35,7 +34,7 @@ def create_tables():
     print("Schema ready.")
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# Helpers 
 
 def _resolve_group(name: str, cursor) -> int | None:
     """Return group id for *name*, None if blank."""
@@ -58,16 +57,14 @@ def _print_rows(rows):
         bday   = r.get("birthday") or "—"
         print(
             f"  [{r['id']:>4}] {r['first_name']:<20}"
-            f"  📧 {(r.get('email') or '—'):<28}"
-            f"  🎂 {bday!s:<12}"
-            f"  👥 {(r.get('group_name') or '—'):<10}"
-            f"  📞 {phones}"
+            f"   {(r.get('email') or '—'):<28}"
+            f"   {bday!s:<12}"
+            f"   {(r.get('group_name') or '—'):<10}"
+            f"   {phones}"
         )
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 3.1  INSERT
-# ─────────────────────────────────────────────────────────────────────────────
 
 def insert_from_console():
     name  = input("First name: ").strip()
@@ -94,9 +91,8 @@ def insert_from_console():
     print(f"Contact '{name}' added (id={cid}).")
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 3.2  SEARCH & FILTER
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 def search_by_name():
     name = input("Name (partial): ").strip()
@@ -133,7 +129,7 @@ def search_by_phone_prefix():
 
 
 def full_search():
-    """Uses the search_contacts() PL/pgSQL function (matches name + email + phones)."""
+    #Uses the search_contacts() PL/pgSQL function (matches name + email + phones)
     q = input("Search query: ").strip()
     with cur() as c:
         c.execute("SELECT * FROM search_contacts(%s)", (q,))
@@ -165,7 +161,7 @@ def _ask_sort() -> str:
 
 
 def paginated_list():
-    """Navigate contacts page by page."""
+    #Navigate contacts page by page
     PAGE_SIZE = 10
     page = 1
     sort = _ask_sort()
@@ -178,7 +174,7 @@ def paginated_list():
             )
             rows = c.fetchall()
 
-        print(f"\n── Page {page} ──────────────────────────────────────────")
+        print(f"\n── Page {page} ────────────")
         _print_rows(rows)
 
         nav = input("\n[n]ext  [p]rev  [q]uit: ").strip().lower()
@@ -196,9 +192,9 @@ def paginated_list():
             break
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # 3.3  UPDATE / DELETE
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 def update_contact():
     search = input("Name to update (partial): ").strip()
@@ -236,7 +232,7 @@ def update_contact():
 
 
 def add_phone_to_contact():
-    """Wrapper around the add_phone stored procedure."""
+    #Wrapper around the add_phone stored procedure
     name  = input("Contact name: ").strip()
     phone = input("Phone number: ").strip()
     ptype = input("Type [home/work/mobile]: ").strip() or "mobile"
@@ -247,7 +243,7 @@ def add_phone_to_contact():
 
 
 def move_contact_to_group():
-    """Wrapper around move_to_group stored procedure."""
+    #Wrapper around move_to_group stored procedure
     name  = input("Contact name: ").strip()
     group = input("Group name: ").strip()
     with cur() as c:
@@ -272,17 +268,14 @@ def delete_contact():
     print("Contact deleted.")
 
 
-# ─────────────────────────────────────────────────────────────────────────────
 # 3.4  IMPORT / EXPORT
-# ─────────────────────────────────────────────────────────────────────────────
 
-# ── CSV import (extended) ────────────────────────────────────────────────────
 
 def insert_from_csv():
-    """
-    Expected CSV columns (header row required):
-    first_name, phone, phone_type, email, birthday, group
-    """
+    
+    #Expected CSV columns (header row required):
+    #first_name, phone, phone_type, email, birthday, group
+    
     path = input("CSV file path: ").strip()
     inserted = skipped = 0
 
@@ -324,7 +317,7 @@ def insert_from_csv():
     print(f"CSV import done – inserted: {inserted}, skipped: {skipped}")
 
 
-# ── JSON export ──────────────────────────────────────────────────────────────
+# JSON export 
 
 def export_to_json():
     path = input("Output JSON file path [contacts.json]: ").strip() or "contacts.json"
@@ -352,7 +345,7 @@ def export_to_json():
     print(f"Exported {len(data)} contacts → {path}")
 
 
-# ── JSON import ──────────────────────────────────────────────────────────────
+# JSON import 
 
 def import_from_json():
     path = input("JSON file path: ").strip()
@@ -416,9 +409,9 @@ def import_from_json():
     print(f"JSON import done – imported: {imported}, overwritten: {overwritten}, skipped: {skipped}")
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+
 # Menu
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 MENU = """
 
